@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tns:POK xmlns:tns="http://www.example.org/POK" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.example.org/POK POK.xsd ">
+  <kernel>
+    <priority_levels>30</priority_levels>
+  </kernel>
+  <partitions>
+    <partition id="1">
+      <scheduler>O1_SPLIT</scheduler>		
+      <threads>
+        <thread priority="10">
+          <event name="evt1" action="WAIT"/>
+        </thread>
+        <thread priority="9">
+          <event name="evt1" action="SET"/>
+        </thread>
+      </threads>
+      <slot duration="40" position="0"></slot>
+      <nb_asynch_events>0</nb_asynch_events>
+    </partition>
+  </partitions>  
+</tns:POK>

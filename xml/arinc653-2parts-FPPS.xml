@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tns:POK xmlns:tns="http://www.example.org/POK" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.example.org/POK POK.xsd ">
+  <hardware>
+    <bus_frequency>74</bus_frequency>
+    <frequency_div>1</frequency_div>
+    <frequency_shift>0</frequency_shift>
+  </hardware>
+  <kernel>
+    <priority_levels>10</priority_levels>
+  </kernel>
+  <partitions>
+    <partition id="1">
+      <scheduler>FPPS</scheduler>
+        <threads>
+          <thread priority="7" />	
+          <thread priority="5" />	
+        </threads>
+        <size>120000</size>
+        <base_vaddr>0x1000</base_vaddr>
+        <slot duration="10" position="0" postwrite_time="2"></slot>
+        <nb_asynch_events>0</nb_asynch_events>
+     </partition>
+
+     <partition id="2">
+       <scheduler>FPPS</scheduler>
+       <threads>
+         <thread priority="5" />
+         <thread priority="7" />
+       </threads>
+       <size>120000</size>
+       <base_vaddr>0x4000</base_vaddr>
+       <slot duration="10" position="1" postwrite_time="3"></slot>
+       <nb_asynch_events>0</nb_asynch_events>
+    </partition>
+ </partitions>
+</tns:POK>

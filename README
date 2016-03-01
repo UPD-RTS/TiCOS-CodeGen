@@ -1,0 +1,51 @@
+
+The goal of this README is to provide quick start guide to use the Code Generator. 
+The complete Code Generator documentation can be found in the doc directory.
+
+The Code Generator use the GNOME XML Library (Libxml2). 
+You can download and install it from http://www.xmlsoft.org/
+
+To compile the Code Generator program just type:
+
+make
+
+To generate the “generated-code” directory (and all files required to run an example) just type:
+
+./code-gen  xml/[file.xml] 
+
+
+XML files
+---------
+In the xml directory you can find some XML file example you can use to generate the user application for TiCOS
+
+arinc653-1event-O1.xml
+application with: one partition, one arinc653 event, O(1) scheduler
+
+arinc653-1event-O1_split.xml
+application with: one partition, one arinc653 event, O(1) scheduler with task split
+
+arinc653-1part.xml
+application with: one partition, two threads, O(1) scheduler
+
+arinc653-2parts-FPPS.xml
+application with: two partitions, two threads for each partition, FPPS scheduler
+
+arinc653-3parts.xml
+application with: three partitions, two threads for each partition, O(1) scheduler
+
+arinc653-blackboards.xml
+application that invokes arinc653 blackboards services, O(1) scheduler
+
+arinc653-buffers.xml
+application that invokes arinc653 buffers services, O(1) scheduler
+
+arinc653-sampling-queueing.xml
+application that invokes arinc653 sampling and queuing port services, O(1) scheduler
+
+arinc653-mix.xml
+application that invokes arinc653 ports, buffers, blackboards and events. O(1) scheduler.
+
+
+If you want to generate a different user application code you can modify an existing XML file or create a new one.
+
+

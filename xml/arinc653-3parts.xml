@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tns:POK xmlns:tns="http://www.example.org/POK" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.example.org/POK POK.xsd ">
+	<kernel>
+		<idle_stack>2048</idle_stack>
+		<user_stack>8196</user_stack>
+	</kernel>
+  <partitions>
+    <partition id="1">
+      <scheduler>O1</scheduler>
+        <threads>
+          <thread priority="8"/>
+        </threads>	
+	<size>120000</size>
+	<base_vaddr>0x1000</base_vaddr>
+        <slot duration="10" position="0"></slot>
+        <slot duration="10" position="2"></slot>
+        <nb_asynch_events>0</nb_asynch_events>
+      </partition>
+
+      <partition id="2">
+        <scheduler>O1</scheduler>
+        <threads>
+          <thread priority="8"/>
+        </threads>	
+        <size>120000</size>
+        <base_vaddr>0x4000</base_vaddr>
+        <slot duration="10" position="1"></slot>
+        <nb_asynch_events>0</nb_asynch_events>
+      </partition>
+
+      <partition id="3">
+        <scheduler>O1</scheduler>
+      <threads>
+        <thread priority="8"/>
+      </threads>	
+      <size>120000</size>
+      <base_vaddr>0x7000</base_vaddr>
+      <load_addr>0xE1000</load_addr>
+      <slot duration="10" position="3"></slot>
+      <nb_asynch_events>0</nb_asynch_events>
+   </partition>
+</partitions>
+</tns:POK>

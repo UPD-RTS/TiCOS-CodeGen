@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tns:POK xmlns:tns="http://www.example.org/POK" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.example.org/POK POK.xsd ">
+ 
+<partitions>
+  <partition id="1">
+    <threads>
+      <thread priority="7">
+        <buffer name="buf" action="SEND"/>
+      </thread>
+      <thread priority="5">
+        <buffer name="buf" action="RECEIVE"/>
+      </thread>
+    </threads>
+    <slot duration="10" position="0"></slot>
+    <buffers max_message_size ="140" max_messages="2"/>
+  </partition>
+</partitions>
+ 
+</tns:POK>

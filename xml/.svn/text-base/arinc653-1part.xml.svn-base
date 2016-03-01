@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tns:POK xmlns:tns="http://www.example.org/POK" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.example.org/POK POK.xsd ">
+  <partitions>
+    <partition id="1">
+      <threads>
+        <thread priority="7" />
+	<thread priority="9" />
+      </threads>
+      <slot duration="10" position="0"></slot>
+      <nb_asynch_events>0</nb_asynch_events>
+    </partition>
+  </partitions>
+</tns:POK>

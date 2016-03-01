@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" 
+targetNamespace="http://www.example.org/POK" 
+xmlns:tns="http://www.example.org/POK">
+
+ 
+<element name="POK">
+	<complexType>
+		<sequence>
+			<element name="hardware" minOccurs="0">
+				<complexType>
+					<sequence>
+						<element name="bus_frequency" type="int" default="74" minOccurs="0"></element>
+						<element name="frequency_div" type="int" default="1" minOccurs="0"></element>
+						<element name="frequency_shift" type="int" default="0" minOccurs="0"></element>	
+					</sequence>      
+				</complexType>	
+			</element>
+
+			<element name="kernel" minOccurs="0" maxOccurs="1">
+				<complexType>
+					<sequence>
+						<element name="idle_stack" type="int" default="4096" minOccurs="0"></element>
+						<element name="user_stack" type="int" default="8192" minOccurs="0"></element>
+						<element name="priority_levels" type="positiveInteger" minOccurs="0"></element>
+					</sequence>
+				</complexType>
+			</element>
+        	
+			<element name="partitions" minOccurs="1" maxOccurs="1">
+				<complexType>
+					<sequence>
+						<element name="partition" type="tns:partition_type" minOccurs="1" maxOccurs="unbounded">
+						</element>
+					</sequence>
+				</complexType>
+			</element>
+
+			<element name="ports" minOccurs="0" maxOccurs="1">   
+				<complexType>
+					<sequence>
+						<element name="max_message_size" type="positiveInteger" minOccurs="0" maxOccurs="1" default="256"></element>
+						<element name="max_queueing_messages" type="positiveInteger" minOccurs="0" maxOccurs="1"></element>
+			   			<element name="port" type="tns:port_type" minOccurs="2" maxOccurs="unbounded"></element>
+		   			</sequence>
+		   		</complexType>
+		   	</element> 
+		</sequence>
+	</complexType>
+	
+	<key name="partition_key">
+		<selector xpath="partitions/partition"/>
+		<field xpath="@id"/>
+	</key>
+
+	<key name="port_key">
+   		<selector xpath="ports/port"/>
+   		<field xpath="@id"/>
+	</key>
+
+</element>
+
+
+
+<complexType name="partition_type">
+	<sequence>
+		<element name="scheduler"  default="O1" minOccurs="0">
+			<simpleType>
+				<restriction base='string' >
+					<enumeration value='FPPS' /> <!-- FPPS is currently not supported when  ports, blackboard, buffers are used -->
+					<enumeration value='O1' />
+					<enumeration value='O1_SPLIT' />
+				</restriction>
+			</simpleType>
+		</element>
+		<!-- number of processes of the partition 	(NOT to count the main thread and the sub-processes required in case of 
+			 events, blackboards and buffers. E.g. if nb_of_threads = 2 and there is a blackboard the total number of threads ea
+			 of the partition will be 2 +1 (main thread) +2 (sub-processes) -->
+		<element name="nb_of_threads" type="positiveInteger" default="1" minOccurs="0" maxOccurs="1"></element>
+		<element name="threads" minOccurs="0" maxOccurs="1">
+			<complexType>
+				<sequence>
+					<element name="thread" minOccurs="1"  maxOccurs="unbounded"> 
+						<complexType>
+							<sequence>
+								<element name="port" minOccurs="0"  maxOccurs="unbounded"> 
+									<complexType>
+										<attribute name="id" type="int" use="required"></attribute>
+									</complexType>
+									<keyref name="thread_port_key" refer="tns:port_key">
+ 										<selector xpath="port"/>
+										<field xpath="@id"/>
+									</keyref>
+								</element>
+								<choice>
+									<element name="event"  minOccurs="0"  maxOccurs="1"> 
+										<complexType>
+												<attribute name="name" type="NCName" use="required"/>
+												<attribute name="action" use="required">
+													<simpleType>
+    													<restriction base="string">
+      														<enumeration value="SET"/>
+      														<enumeration value="WAIT"/>
+      													</restriction>
+  													</simpleType>												
+												</attribute>
+										</complexType>
+									</element>
+									<element name="blackboard"  minOccurs="0"  maxOccurs="1"> 
+										<complexType>
+												<attribute name="name" type="NCName" use="required"/>
+												<attribute name="action" use="required">
+													<simpleType>
+    													<restriction base="string">
+      														<enumeration value="DISPLAY"/>
+      														<enumeration value="READ"/>
+      													</restriction>
+  													</simpleType>												
+												</attribute>
+										</complexType>
+									</element>
+									<element name="buffer"  minOccurs="0"  maxOccurs="1"> 
+										<complexType>
+												<attribute name="name" type="NCName" use="required"/>
+												<attribute name="action" use="required">
+													<simpleType>
+    													<restriction base="string">
+      														<enumeration value="SEND"/>
+      														<enumeration value="RECEIVE"/>
+      													</restriction>
+  													</simpleType>												
+												</attribute>
+										</complexType>
+									</element>
+								</choice>
+								
+							</sequence>
+							<attribute name="priority" type="positiveInteger"></attribute>
+						</complexType>
+					</element>
+				</sequence>
+			</complexType>
+		</element>
+	
+
+		<element name="size" type="positiveInteger" minOccurs="0"></element>
+		<element name="base_vaddr" type="string" minOccurs="0"></element>
+		<element name="load_addr" type="string" minOccurs="0"></element>
+		
+		<!-- partition's slots -->
+		<element name="slot" minOccurs="1" maxOccurs="unbounded">
+			<complexType>
+				<!-- duration of the partition's scheduling slot-->
+				<attribute name="duration" type="positiveInteger"></attribute>
+				<!-- slot position in the major frame-->
+				<attribute name="position" type="int"></attribute>				
+				<!-- duration of the postwrite sub-slot-->
+				<attribute name="postwrite_time" type="positiveInteger" use="optional"></attribute>
+			</complexType>
+		</element>
+
+		<element name="nb_asynch_events" type="int" minOccurs="0"></element>
+			
+		<element name="blackboards" minOccurs="0" maxOccurs="1">
+			<complexType>
+				<attribute name="max_message_size" type="int" use="required"></attribute> 
+			</complexType>
+		</element>
+		
+		<element name="buffers" minOccurs="0" maxOccurs="1">
+			<complexType>
+				<attribute name="max_message_size" type="int" use="required"></attribute> 
+				<attribute name="max_messages" type="int" use="required"></attribute> 			
+			</complexType>
+		</element>
+	</sequence>
+	<attribute name="id" type="int" use="required"></attribute> 	
+</complexType>
+
+<complexType name="port_type">
+	<sequence>
+		<element name="name" type="string" minOccurs="0" maxOccurs="1"></element>
+		<!--element name="partition_id" type="int" minOccurs="0" maxOccurs="1"> 
+			<keyref name="partition_port_key" refer="tns:partition_key">
+ 				<selector xpath="port"/>
+				<field xpath="@partition_id"/>
+			</keyref>
+		</element-->
+		<element name="kind" minOccurs="1">
+			<simpleType>
+    			<restriction base="string">
+      				<enumeration value="sampling"/>
+      				<enumeration value="queueing"/>
+     			</restriction>
+  			</simpleType>	
+		</element>
+			<element name="direction" minOccurs="1">
+			<simpleType>
+    			<restriction base="string">
+      				<enumeration value="destination"/> 	<!-- input port-->
+      				<enumeration value="source"/>		<!-- output port-->
+     			</restriction>
+  			</simpleType>	
+		</element>
+		<element name="destination_port" minOccurs="0" maxOccurs="unbounded">
+			<complexType>
+				<attribute name="id" type="int" use="required"></attribute>
+			</complexType>
+			<keyref name="destination_port_key" refer="tns:port_key">
+ 				<selector xpath="destination_port"/>
+				<field xpath="@id"/>
+			</keyref>
+		</element>
+		<!-- element name="default_message" minOccurs="0" maxOccurs="1">
+			<complexType>
+				<sequence>
+					<element type="token"></element>
+				</sequence>
+				<attribute name="size" type="int"></attribute>
+			</complexType>
+			
+		</element -->
+	</sequence>
+	<attribute name="id" type="int" use="required"></attribute> 		
+</complexType>
+
+</schema>        

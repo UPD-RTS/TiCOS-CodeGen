@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/!svn/ver/932/stuff/Code_Generator_Release/src/include
+END
+build_utils.h
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/!svn/ver/932/stuff/Code_Generator_Release/src/include/build_utils.h
+END
+arinc653-xml-conf.h
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/!svn/ver/932/stuff/Code_Generator_Release/src/include/arinc653-xml-conf.h
+END
+read_utils.h
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/!svn/ver/932/stuff/Code_Generator_Release/src/include/read_utils.h
+END
+Makefile.h
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/!svn/ver/932/stuff/Code_Generator_Release/src/include/Makefile.h
+END

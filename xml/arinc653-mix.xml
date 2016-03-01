@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tns:POK xmlns:tns="http://www.example.org/POK" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.example.org/POK POK.xsd ">
+
+
+<partitions>
+	<partition id="3">
+		<threads>
+			<thread priority="19">
+				<port id="1"/>
+				<blackboard name="bb" action="DISPLAY"/>
+			</thread>
+			<thread priority="17">
+				<port id="2"/>
+				<blackboard name="bb" action="READ"/>
+			</thread>
+			<thread priority="7">
+				
+			</thread>
+			<thread priority="6">
+	
+			</thread>
+		</threads>
+		<size>120000</size>
+		<base_vaddr>0x1000</base_vaddr>
+		<slot duration="10" position="0" postwrite_time="2"></slot>
+     		 <nb_asynch_events>0</nb_asynch_events>
+	</partition>
+	<partition id="2">
+		<threads>
+			<thread priority="9">
+				<event name="evt1" action="WAIT"/>
+			</thread>
+			<thread priority="7">
+				<event name="evt1" action="SET"/>
+			</thread>
+			<thread priority="17">
+				<port id="4"/>
+				<buffer name="buf" action="SEND"/>
+			</thread>
+			<thread priority="15">
+				<port id="3"/>
+				<buffer name="buf" action="RECEIVE"/>
+			</thread>
+		</threads>
+		<size>120000</size>
+		<base_vaddr>0x4000</base_vaddr>
+		<slot duration="10" position="1" postwrite_time="3"></slot>
+		<nb_asynch_events>0</nb_asynch_events>
+	</partition>
+</partitions>
+
+<ports>
+	<max_message_size>256</max_message_size> 
+	<port id="1" >
+		<name>port_01</name>
+		<kind>sampling</kind>   
+		<direction>source</direction>	
+		<destination_port id="4"></destination_port> 
+	</port>
+	<port id="2" >
+		<name>port_02</name>
+		<kind>queueing</kind>
+		<direction>destination</direction> 
+	</port>
+	<port id="3" >
+		<name>port_03</name>
+		<kind>queueing</kind>   
+		<direction>source</direction>
+ 		<destination_port id="2"></destination_port> 
+	</port>
+	<port id="4" >
+		<name>port_04</name>
+		<kind>sampling</kind>
+		<direction>destination</direction> 
+	</port>
+</ports>
+</tns:POK>

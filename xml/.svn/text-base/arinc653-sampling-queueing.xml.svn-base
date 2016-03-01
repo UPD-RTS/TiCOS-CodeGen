@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tns:POK xmlns:tns="http://www.example.org/POK" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.example.org/POK POK.xsd ">
+  <hardware>
+    <bus_frequency>74</bus_frequency>
+    <frequency_div>1</frequency_div>
+    <frequency_shift>0</frequency_shift>
+  </hardware>
+
+  <kernel>
+    <priority_levels>15</priority_levels>
+  </kernel>
+
+  <partitions>
+    <partition id="3">
+      <threads> 
+        <thread priority="14">
+          <port id="1"/>
+		</thread>
+        <thread priority="12">
+          <port id="2"/>
+        </thread>
+        <thread priority="10">
+          <port id="8"/>
+        </thread>
+        <thread priority="8">
+          <port id="5"/>
+        </thread>
+     </threads>
+     <size>120000</size>
+     <base_vaddr>0x1000</base_vaddr>
+     <slot duration="10" position="0" postwrite_time="2"></slot>
+     <nb_asynch_events>0</nb_asynch_events>
+   </partition>
+
+   <partition id="2">
+      <threads>
+        <thread priority="9">
+          <port id="6"/>
+        </thread>
+        <thread priority="8">
+          <port id="7"/>
+        </thread>
+        <thread priority="7">
+          <port id="4"/>
+        </thread>
+        <thread priority="6">
+          <port id="3"/>
+        </thread>
+       </threads>
+       <size>120000</size>
+       <base_vaddr>0x4000</base_vaddr>
+       <slot duration="10" position="1" postwrite_time="3"></slot>
+       <nb_asynch_events>0</nb_asynch_events>
+    </partition>
+  </partitions>
+  
+  <ports>
+    <max_message_size>256</max_message_size> 
+    <port id="1" >
+      <name>port_01</name>
+      <kind>sampling</kind>   
+      <direction>source</direction>
+      <destination_port id="4"></destination_port> 
+    </port>
+
+    <port id="2" >
+      <name>port_02</name>
+      <kind>queueing</kind>
+      <direction>destination</direction> 
+    </port>
+
+    <port id="3" >
+      <name>port_03</name>
+      <kind>queueing</kind>   
+      <direction>source</direction>
+      <destination_port id="2"></destination_port> 
+    </port>
+
+    <port id="4" >
+      <name>port_04</name>
+      <kind>sampling</kind>
+      <direction>destination</direction> 
+    </port>
+
+    <port id="5" >
+      <name>port_05</name>
+      <kind>queueing</kind>   
+      <direction>destination</direction>
+    </port>
+
+    <port id="6">
+      <name>port_06</name>
+      <kind>queueing</kind>
+      <direction>destination</direction> 
+    </port>
+
+    <port id="7">
+      <name>port_07</name>
+      <kind>queueing</kind>   
+      <direction>source</direction>
+      <destination_port id="5"></destination_port> 
+    </port>
+
+    <port id="8" >
+      <name>port_08</name>
+      <kind>queueing</kind>
+      <direction>source</direction> 
+      <destination_port id="6"></destination_port> 
+    </port>
+   
+  </ports>
+</tns:POK>
